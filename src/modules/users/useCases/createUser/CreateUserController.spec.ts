@@ -14,7 +14,7 @@ describe("Create User Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    connection.query("DELETE FROM users");
+    await connection.query("DELETE FROM users");
   });
 
   afterAll(async () => {
