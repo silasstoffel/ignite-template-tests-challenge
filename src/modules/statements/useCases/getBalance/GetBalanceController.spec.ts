@@ -15,8 +15,8 @@ describe("Show User Profile Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    await connection.query("DELETE FROM users");
-    await connection.query("DELETE FROM statements");
+    await connection.query(`DELETE FROM statements WHERE statements.user_id IN(SELECT id FROM users WHERE email = '${payloadCreateUser.email}')`);
+    await connection.query(`DELETE FROM users WHERE email = '${payloadCreateUser.email}'`);
 
     // Create user
     await request(app).post("/api/v1/users").send(payloadCreateUser);
@@ -60,6 +60,8 @@ describe("Show User Profile Controller", () => {
   });
 
   afterAll(async () => {
+    await connection.query(`DELETE FROM statements WHERE statements.user_id IN(SELECT id FROM users WHERE email = '${payloadCreateUser.email}')`);
+    await connection.query(`DELETE FROM users WHERE email = '${payloadCreateUser.email}'`);
     await connection.close();
   });
 

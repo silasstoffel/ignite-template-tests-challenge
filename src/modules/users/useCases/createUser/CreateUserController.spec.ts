@@ -14,10 +14,10 @@ describe("Create User Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    await connection.query("DELETE FROM users");
   });
 
   afterAll(async () => {
+    await connection.query(`DELETE FROM users WHERE email = '${payloadCreateUser.email}'`);
     await connection.close();
   });
 

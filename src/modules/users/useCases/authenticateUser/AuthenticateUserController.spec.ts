@@ -14,12 +14,13 @@ describe("Authenticate User Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    await connection.query("DELETE FROM users");
+    await connection.query(`DELETE FROM users WHERE email = '${payloadCreateUser.email}'`);
     // Create user
     await request(app).post("/api/v1/users").send(payloadCreateUser);
   });
 
   afterAll(async () => {
+    await connection.query(`DELETE FROM users WHERE email = '${payloadCreateUser.email}'`);
     await connection.close();
   });
 
