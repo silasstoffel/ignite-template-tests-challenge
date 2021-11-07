@@ -41,14 +41,4 @@ describe("Show User Profile Controller", () => {
     expect(response.status).toBe(200);
   });
 
-  it("Should not be able to load a user profile", async () => {
-    const response = await request(app)
-      .get("/api/v1/profile")
-      .send(payloadCreateUser)
-      .set({
-        Authorization: `Bearer ${token}`
-      });
-    expect(response.status).toBe(200);
-  });
-
 });
