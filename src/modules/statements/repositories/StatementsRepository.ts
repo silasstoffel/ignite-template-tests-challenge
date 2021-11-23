@@ -51,7 +51,7 @@ export class StatementsRepository implements IStatementsRepository {
     });
 
     const balance = statement.reduce((acc, operation) => {
-      operation.amount = parseFloat(operation.amount);
+      operation.amount = parseFloat(operation.amount.toString());
       if (operation.type === OperationType.TRANSFER) {
         if (operation.sender_id) {
           // receiver an amount
